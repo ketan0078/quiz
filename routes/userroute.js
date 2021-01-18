@@ -14,5 +14,5 @@ router.route("/createuser").post(registeruser);
 router.route("/login").post(loginuser);
 router.route("/myquizes").get(protect, getmyquizes);
 router.route("/logout").delete(protect, logoutuser);
-router.route("getuser").get(protect, getuser);
+router.route("/getuser").get(protect, getuser);// added a / in route
 export default router;
