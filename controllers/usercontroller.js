@@ -11,10 +11,9 @@ export const loginuser = asynchandler(async (req, res) => {
     res.json({
       id: user._id,
       name: user.name,
-      email: user.email,
-      password: user.password,
+      email: user.email,//do not disclose password to users
       isAdmin: user.isAdmin,
-      token: user.token ? user.token : generateauth(user._id),
+      token: generateauth(user._id),//not storing token in user. no neet to make a check
     });
   } else {
     res.status(401);
@@ -31,8 +30,7 @@ export const registeruser = asynchandler(async (req, res) => {
       id: user._id,
       name: user.name,
       email: user.email,
-      password: user.password,
-      token: generateauth(user._id),
+      token: generateauth(user._id),//do not disclose passwords to user 
     });
   } else {
     res.status(400);
@@ -62,7 +60,11 @@ export const logoutuser = asynchandler(async (req, res) => {
 export const getuser = asynchandler(async (req, res) => {
   const user = await User.findById(req.student._id);
   if (user) {
-    res.json(user._id);
+    res.json({
+      userID:user._id,
+      name:user.name,
+      email:user.email,
+    });
   } else {
     throw new Error("user not found");
   }
